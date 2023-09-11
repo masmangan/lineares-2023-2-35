@@ -46,7 +46,7 @@ class Stack {
 public class Main {
     public static void main(String[] args) throws StackOverflowException, StackUnderflowException {
 
-        System.out.println("Pilhas!");
+        System.out.println(" Pilhas! ");
         Stack s1 = new Stack();
         s1.push(10);
         s1.push(20);
