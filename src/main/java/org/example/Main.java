@@ -1,60 +1,85 @@
 package org.example;
 
+import java.util.Arrays;
 
-class Stack {
+class Queue {
+
     private int[] data;
-    private int top;
+    private int inicio;
+    private int fim;
 
-    public Stack() {
+    public Queue() {
         data = new int[5];
-        top = -1;
+        inicio = 0;
+        fim = 0;
     }
 
-    public boolean isEmpty() {
-        return top == -1;
-    }
-
-    public boolean isFull() {
-        return top == data.length - 1;
-    }
-
-    public void push(int value) throws StackOverflowException {
-        if (isFull()) {
-            throw new StackOverflowException();
+    public void enqueue(int value) throws QueueFullException {
+        data[fim] = value;
+        if (fim == data.length - 1) {
+            if (inicio == 0) {
+                throw new QueueFullException();
+            }
+            fim = 0;
+        } else {
+            fim = fim + 1;
         }
-        top++;
-        data[top] = value;
     }
 
-    public int pop() throws StackUnderflowException {
-        if (isEmpty()) {
-            throw new StackUnderflowException();
+    public int dequeue() throws QueueEmptyException {
+        if (inicio == fim) {
+            throw new QueueEmptyException();
         }
-        int value = data[top];
-        top--;
+        int value = data[inicio];
+        if (inicio == data.length - 1) {
+            inicio = 0;
+        } else {
+            inicio = inicio + 1;
+        }
         return value;
     }
 
-    public int peek() throws StackUnderflowException {
-        if (isEmpty()) {
-            throw new StackUnderflowException();
-        }
-        return data[top];
+    @Override
+    public String toString() {
+        return "Queue{" +
+                "data=" + Arrays.toString(data) +
+                ", inicio=" + inicio +
+                ", fim=" + fim +
+                '}';
     }
 }
 
 public class Main {
-    public static void main(String[] args) throws StackOverflowException, StackUnderflowException {
 
-        System.out.println(" Pilhas! ");
-        Stack s1 = new Stack();
-        s1.push(10);
-        s1.push(20);
-        s1.push(30);
+    public static void main(String[] args) {
 
-        while (!s1.isEmpty()) {
-            System.out.println(s1.pop());
+        System.out.println(" Queue! ");
+
+        Queue q1 = new Queue();
+        try {
+            System.out.println(q1);
+            q1.enqueue(10);
+            System.out.println(q1);
+            q1.enqueue(20);
+            System.out.println(q1);
+            q1.enqueue(30);
+            System.out.println(q1);
+            q1.enqueue(40);
+            System.out.println(q1);
+            System.out.println(q1.dequeue());
+            q1.enqueue(50);
+            System.out.println(q1.dequeue());
+            System.out.println(q1);
+            System.out.println(q1.dequeue());
+            System.out.println(q1);
+            System.out.println(q1.dequeue());
+            System.out.println(q1);
+            System.out.println(q1.dequeue());
+        } catch (Exception e) {
+            System.out.println("***Erro!***");
+            System.out.println(e);
         }
+
 
     }
 }
